@@ -8,7 +8,7 @@ on:
       - main
 
 jobs:
-  get-info:
+  Update-config:
     runs-on: ubuntu-latest
     steps:
       - name: 'clone repo'
