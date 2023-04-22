@@ -14,15 +14,16 @@ jobs:
       - name: 'clone repo'
         uses: actions/checkout@v2
       - name: Update config
-        env:
-          ACCESS_TOKEN: ${{ secrets.A1 }}
+      #  env:
+       #   ACCESS_TOKEN: ${{ secrets.A1 }}
         run: |
           python update_config.py
-          git config --global user.email "1462749078@qq.com"  # 设置提交者的邮箱
-          git config --global user.name "yangyucacaa"         # 设置提交者的名称
-          git add net1data
-          git commit -m "$(date '+%Y.%m.%d %H:%M:%S') Update config"
-          #git push
-          git push https://${ACCESS_TOKEN}@github.com/yangyucacaa/netVPN1.git
+          git config --global user.email "actions@github.com"  # 设置提交者的邮箱
+          git config --global user.name "GitHub Actions"         # 设置提交者的名称
+          git status -s
+          git pull origin main
+          git add .
+          git commit -m "$(date '+%Y.%m.%d %H:%M:%S') Update config" 
+          git push origin main
 
           
