@@ -18,9 +18,12 @@ data['data']['appUrl'] = data['data'].pop('app_url')
 
 # 将修改后的数据转换为json格式，并编码为base64
 new_data = json.dumps(data).encode('utf-8')
-
+# 推送 net1data 
+net1data = json.dumps(data)
 print(json.dumps(data))
 print(new_data)
 print(data)
-
+# 将修改后的数据保存为 net1data.json 文件
+with open('net1data.json', 'w') as f:
+    json.dump(data, f)
 
