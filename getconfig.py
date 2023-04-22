@@ -20,7 +20,7 @@ def convert_keys_to_snake_case(data):
         return data
 
 # 访问a.com并获取JSON数据
-response = requests.get('https://a.com')
+response = requests.get('https://netvpn.cc/api/v1/guest/comm/config')
 json_data = response.json()
 
 # 修改JSON数据
