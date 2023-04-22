@@ -1,0 +1,25 @@
+name: Update config
+
+on:
+  schedule:
+    - cron: '*/10 * * * *'
+  push:
+    branches:
+      - main
+
+jobs:
+  update_config:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+      - name: Install dependencies
+        run: pip install requests
+      - name: Update config
+        run: python update_config.py
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
