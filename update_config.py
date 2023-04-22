@@ -19,6 +19,7 @@ data['data']['appUrl'] = data['data'].pop('app_url')
 # 将修改后的数据转换为json格式，并编码为base64
 new_data = json.dumps(data).encode('utf-8')
 
+print(json.dumps(data))
 print(new_data)
 print(data)
 
