@@ -8,18 +8,10 @@ on:
       - main
 
 jobs:
-  update_config:
+  get-info:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-      - name: Set up Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: '3.x'
-      - name: Install dependencies
-        run: pip install requests
+      - name: 'clone repo'
+        uses: actions/checkout@v3.3.0
       - name: Update config
         run: python update_config.py
-        env:
-          GITHUB_TOKEN: ${{ secrets.a1 }}
