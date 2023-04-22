@@ -22,6 +22,7 @@ jobs:
           git config --global user.name "yangyucacaa"         # 设置提交者的名称
           git add net1data
           git commit -m "$(date '+%Y.%m.%d %H:%M:%S') Update config"
-          git push
-          #git push https://${ACCESS_TOKEN}@github.com/yangyucacaa/netVPN1.git
+          #git push
+          git push https://${ACCESS_TOKEN}@github.com/yangyucacaa/netVPN1.git
+
           
