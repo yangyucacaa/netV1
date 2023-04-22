@@ -1,34 +1,38 @@
 import requests
 import json
+import base64
+from datetime import datetime, timedelta
+from github import Github
 
-# Convert keys to snake_case
-def snake_case(key):
-    return ''.join(['_'+i.lower() if i.isupper() else i for i in key]).lstrip('_')
-
-# Recursively convert keys to snake_case
-def convert_keys_to_snake_case(data):
-    if isinstance(data, dict):
-        new_data = {}
-        for key, value in data.items():
-            new_key = snake_case(key)
-            new_value = convert_keys_to_snake_case(value)
-            new_data[new_key] = new_value
-        return new_data
-    elif isinstance(data, list):
-        return [convert_keys_to_snake_case(item) for item in data]
-    else:
-        return data
-
-# 访问a.com并获取JSON数据
+# 访问a.com获取json数据
 response = requests.get('https://netvpn.cc/api/v1/guest/comm/config')
-json_data = response.json()
+data = json.loads(response.text)
 
-# 修改JSON数据
-modified_json_data = convert_keys_to_snake_case(json_data)
+# 修改数据
+data['data']['isEmailVerify'] = data['data'].pop('is_email_verify')
+data['data']['isInviteForce'] = data['data'].pop('is_invite_force')
+data['data']['emailWhitelistSuffix'] = data['data'].pop('email_whitelist_suffix')
+data['data']['isRecaptcha'] = data['data'].pop('is_recaptcha')
+data['data']['recaptchaSiteKey'] = data['data'].pop('recaptcha_site_key')
+data['data']['appDescription'] = data['data'].pop('app_description')
+data['data']['appUrl'] = data['data'].pop('app_url')
 
-# 输出修改后的JSON数据
-print(json.dumps(modified_json_data, ensure_ascii=False, indent=2))
+# 将修改后的数据转换为json格式，并编码为base64
+new_data = json.dumps(data).encode('utf-8')
+new_data_b64 = base64.b64encode(new_data).decode('utf-8')
 
-# 输出修改后的JSON数据到文件
-with open('data.json', 'w') as f:
-    json.dump(modified_json_data, f, ensure_ascii=False, indent=2)
+# 使用GitHub API推送更改后的内容到仓库中
+g = Github('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')
+repo = g.get_repo('netVPN1')
+contents = repo.get_contents('/api/v1/passport/comm/config')
+message = 'Update config'
+branch = 'main'
+commiter = {'name': 'yangyucacaa', 'email': '1462749078@qq.com'}
+now = datetime.utcnow() + timedelta(hours=8)
+timestamp = now.strftime('%Y-%m-%d %H:%M:%S')
+content = contents.decoded_content.decode('utf-8')
+if content != new_data_b64:
+    repo.update_file(contents.path, message, new_data_b64, contents.sha, branch=branch, committer=commiter, author=commiter)
+    print(f'[{timestamp}] Config updated')
+else:
+    print(f'[{timestamp}] Config not changed')
