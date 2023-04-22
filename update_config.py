@@ -24,6 +24,6 @@ print(json.dumps(data))
 print(new_data)
 print(data)
 # 将修改后的数据保存为 net1data.json 文件
-with open('net1data.json', 'w') as f:
+with open('net1data', 'w') as f:
     json.dump(data, f)
 
