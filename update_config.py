@@ -19,20 +19,8 @@ data['data']['appUrl'] = data['data'].pop('app_url')
 
 # 将修改后的数据转换为json格式，并编码为base64
 new_data = json.dumps(data).encode('utf-8')
-new_data_b64 = base64.b64encode(new_data).decode('utf-8')
 
-# 使用GitHub API推送更改后的内容到仓库中
-g = Github('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')
-repo = g.get_repo('netVPN1')
-contents = repo.get_contents('/api/v1/passport/comm/config')
-message = 'Update config'
-branch = 'main'
-commiter = {'name': 'yangyucacaa', 'email': '1462749078@qq.com'}
-now = datetime.utcnow() + timedelta(hours=8)
-timestamp = now.strftime('%Y-%m-%d %H:%M:%S')
-content = contents.decoded_content.decode('utf-8')
-if content != new_data_b64:
-    repo.update_file(contents.path, message, new_data_b64, contents.sha, branch=branch, committer=commiter, author=commiter)
-    print(f'[{timestamp}] Config updated')
-else:
-    print(f'[{timestamp}] Config not changed')
+print(new_data)
+print(data)
+
+
