@@ -20,7 +20,7 @@ jobs:
           python update_config.py
           git config --global user.email "1462749078@qq.com"  # 设置提交者的邮箱
           git config --global user.name "yangyucacaa"         # 设置提交者的名称
-          git add /api/v1passport/comm/config
-          git commit -m "Update net1data"
+          git add ./api/v1passport/comm/config
+          git commit -m "$(date '+%Y.%m.%d %H:%M:%S') Update config"
           #git push
           git push https://${ACCESS_TOKEN}@github.com/yangyucacaa/netVPN1.git
