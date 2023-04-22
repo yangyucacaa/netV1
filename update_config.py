@@ -15,7 +15,8 @@ data['data']['isRecaptcha'] = data['data'].pop('is_recaptcha')
 data['data']['recaptchaSiteKey'] = data['data'].pop('recaptcha_site_key')
 data['data']['appDescription'] = data['data'].pop('app_description')
 data['data']['appUrl'] = data['data'].pop('app_url')
-
+# 添加UPtime
+data['data']['uptime'] = (datetime.now() + timedelta(hours=8)).strftime('%Y-%m-%d %H:%M:%S')
 # 将修改后的数据转换为json格式，并编码为base64
 new_data = json.dumps(data).encode('utf-8')
 # 推送 net1data 
