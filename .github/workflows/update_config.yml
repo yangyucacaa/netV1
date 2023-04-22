@@ -19,6 +19,8 @@ jobs:
           python-version: '3.x'
       - name: Install dependencies
         run: pip install requests
+      - name: Install dependencies
+        run: python -m pip install PyGithub
       - name: Update config
         run: python update_config.py
         env:
