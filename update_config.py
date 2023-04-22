@@ -2,7 +2,6 @@ import requests
 import json
 import base64
 from datetime import datetime, timedelta
-from github import Github
 
 # 访问a.com获取json数据
 response = requests.get('https://netvpn.cc/api/v1/guest/comm/config')
