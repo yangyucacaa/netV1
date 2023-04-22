@@ -14,8 +14,8 @@ jobs:
       - name: 'clone repo'
         uses: actions/checkout@v2
       - name: Update config
-       # env:
-        #  ACCESS_TOKEN: ${{ secrets.A1 }}
+        env:
+          ACCESS_TOKEN: ${{ secrets.A1 }}
         run: |
           python update_config.py
           git config --global user.email "1462749078@qq.com"  # 设置提交者的邮箱
