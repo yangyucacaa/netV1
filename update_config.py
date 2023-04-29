@@ -71,3 +71,43 @@ process_domain('b.com')
 process_domain('c.com')
 #自定义 process_domain('a.com', '1')
 """
+
+"""
+# 新的
+import requests
+import json
+from datetime import datetime
+
+def process_domain(domain, filename):
+    # 访问域名获取json数据
+    response = requests.get(f'https://{domain}/api/v1/guest/comm/config')
+    data = json.loads(response.text)
+
+    # 修改数据
+    data['data']['isEmailVerify'] = data['data'].pop('is_email_verify')
+    data['data']['isInviteForce'] = data['data'].pop('is_invite_force')
+    data['data']['emailWhitelistSuffix'] = data['data'].pop('email_whitelist_suffix')
+    data['data']['isRecaptcha'] = data['data'].pop('is_recaptcha')
+    data['data']['recaptchaSiteKey'] = data['data'].pop('recaptcha_site_key')
+    data['data']['appDescription'] = data['data'].pop('app_description')
+    data['data']['appUrl'] = data['data'].pop('app_url')
+
+    # 添加UPtime
+    data['data']['uptime'] = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+
+    # 将修改后的数据保存为文件
+    with open(f'{domain}_{filename}.json', 'w') as f:
+        json.dump(data, f)
+
+    # 返回数据
+    return data
+
+# 保存第一个域名为 1.json
+process_domain('a.com', '1')
+
+# 保存第二个域名为 2.json
+process_domain('b.com', '2')
+
+# 保存第三个域名为 3.json
+process_domain('c.com', '3')
+"""
