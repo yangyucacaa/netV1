@@ -32,3 +32,38 @@ print(json.loads(response.text))
 with open('net1data', 'w') as f:
     json.dump(data, f)
 
+"""
+import requests
+import json
+import base64
+from datetime import datetime, timedelta
+
+def process_domain(domain):
+    # 访问域名获取json数据
+    response = requests.get(f'https://{domain}/api/v1/guest/comm/config')
+    data = json.loads(response.text)
+
+    # 修改数据
+    data['data']['isEmailVerify'] = data['data'].pop('is_email_verify')
+    data['data']['isInviteForce'] = data['data'].pop('is_invite_force')
+    data['data']['emailWhitelistSuffix'] = data['data'].pop('email_whitelist_suffix')
+    data['data']['isRecaptcha'] = data['data'].pop('is_recaptcha')
+    data['data']['recaptchaSiteKey'] = data['data'].pop('recaptcha_site_key')
+    data['data']['appDescription'] = data['data'].pop('app_description')
+    data['data']['appUrl'] = data['data'].pop('app_url')
+    # 添加UPtime
+    #data['data']['uptime'] = (datetime.now() + timedelta(hours=8)).strftime('%Y-%m-%d %H:%M:%S')
+    # 移除加8个小时时间差
+    data['data']['uptime'] = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+
+    # 将修改后的数据保存为文件
+    with open(f'{domain}.json', 'w') as f:
+        json.dump(data, f)
+
+    # 返回数据
+    return data
+    
+ process_domain('a.com')
+process_domain('b.com')
+process_domain('c.com')
+"""
