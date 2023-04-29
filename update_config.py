@@ -55,15 +55,19 @@ def process_domain(domain):
     #data['data']['uptime'] = (datetime.now() + timedelta(hours=8)).strftime('%Y-%m-%d %H:%M:%S')
     # 移除加8个小时时间差
     data['data']['uptime'] = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-
+    
+    #自定义with open(f'{domain}_{filename}.json', 'w') as f:
+    json.dump(data, f)
+    
     # 将修改后的数据保存为文件
     with open(f'{domain}.json', 'w') as f:
         json.dump(data, f)
-
+       
     # 返回数据
     return data
     
  process_domain('a.com')
 process_domain('b.com')
 process_domain('c.com')
+#自定义 process_domain('a.com', '1')
 """
